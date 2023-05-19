@@ -20,7 +20,7 @@ module.exports = (sequelize , DataTypes) => {
             allowNull: false,
             validate: {
               isInt: {
-                msg: "price must be an integer"
+                msg: "price must be an integer",
               },
               min: {
                 args: [0],
@@ -50,10 +50,6 @@ module.exports = (sequelize , DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true
         },
-        legumes: {
-            type: DataTypes.JSON,
-            allowNull: true
-        },
         sauce: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -63,18 +59,14 @@ module.exports = (sequelize , DataTypes) => {
               }
             }
         },
-        description: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
         RestaurantId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-              model: 'Restaurant',
-              key: 'id',
-              onDelete: 'CASCADE'
-            }
+            // allowNull: false,
+            // references: {
+            //   model: 'Restaurant',
+            //   key: 'id',
+            //   onDelete: 'CASCADE'
+            // }
         },
     }, {
         timestamps: true,

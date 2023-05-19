@@ -6,9 +6,7 @@ const burgers = [
         picture: "/images/fuego-inferno.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"fromage",
-        description:"Le burger le plus épicé de la carte !",
         RestaurantId: 1,
         created: new Date()
     },
@@ -19,9 +17,7 @@ const burgers = [
         picture: "/images/mac-attack.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"ketchup",
-        description:"",
         RestaurantId: 1,
         created: new Date()
     },
@@ -32,9 +28,7 @@ const burgers = [
         picture: "/images/veggie-delight.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"ketchup",
-        description:"",
         RestaurantId: 2,
         created: new Date()
     },
@@ -45,9 +39,7 @@ const burgers = [
         picture: "/images/surf-n-turf.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"ketchup",
-        description:"",
         RestaurantId: 2,
         created: new Date()
     },
@@ -58,9 +50,7 @@ const burgers = [
         picture: "/images/breakfast-bomb.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"ketchup",
-        description:"",
         RestaurantId: 2,
         created: new Date()
     },
@@ -71,9 +61,7 @@ const burgers = [
         picture: "/images/smokin-bbq.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"ketchup",
-        description:"",
         RestaurantId: 3,
         created: new Date()
     },
@@ -84,9 +72,7 @@ const burgers = [
         picture: "/images/truffle-shuffle.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"ketchup",
-        description:"",
         RestaurantId: 3,
         created: new Date()
     },
@@ -97,9 +83,7 @@ const burgers = [
         picture: "/images/blue-hawaiian.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"ketchup",
-        description:"",
         RestaurantId: 3,
         created: new Date()
     },
@@ -110,9 +94,7 @@ const burgers = [
         picture: "/images/southern-charm.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"ketchup",
-        description:"",
         RestaurantId: 4,
         created: new Date()
     },
@@ -123,9 +105,7 @@ const burgers = [
         picture: "/images/nacho-libre.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        legumes:["salade", "tomate", "oignon"],
         sauce:"ketchup",
-        description:"",
         RestaurantId: 4,
         created: new Date()
     }

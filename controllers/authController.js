@@ -2,8 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User, Review } = require('../db/sequelize');
 const { Op, UniqueConstraintError, ValidationError } = require('sequelize');
-const privateKey = require('../auth/private_key');
-const e = require('cors');
+// const e = require('cors');
+const private_key = require('../auth/private_key.js');
 
 exports.login = (req, res) => {
     if (!req.body.username || !req.body.password) {
@@ -82,7 +82,7 @@ exports.protect = (req, res, next) => {
     }
     try {
     const token = authorizationHeader.split(' ')[1];
-    const decoded = jwt.verify(token, privateKey);
+    const decoded = jwt.verify(token, private_key);
     req.userId = decoded.data
     } catch (error) {
         const message = 'Token is not valid'

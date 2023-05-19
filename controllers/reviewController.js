@@ -3,7 +3,7 @@ const { Review, User, Burger } = require('../db/sequelize')
 
 exports.findAllReviews = (req, res) => {
     Review.findAll({
-        include: [User.scope('withoutPassword'), Burger]
+        // include: [User.scope('withoutPassword'), Burger]
     }) 
         .then(results => {
             const message = "Reviews list has been retrieved from database"
@@ -33,59 +33,59 @@ exports.createReview = (req, res) => {
         })
 }
 
-exports.updateReview = (req, res) => {
-    // Modifier le review en base de données qui correspond à l'id spécifé dans les params
-    Review.update(req.body, {
-        where: {
-            id: req.params.id
-        }
-    }).then((review) => {
-        if(review === null){
-            const msg = "Review not found."
-            res.json({message: msg})
-        } else {
-            const msg = "Review updated."
-            res.json({message: msg, data: review})
-        }
-    }).catch((error) => {
-        if(error instanceof UniqueConstraintError || error instanceof ValidationError){
-            return res.status(400).json({message: error.message, data: error})
-        } 
-        const msg = "Impossible to update review."
-        res.status(500).json({message: msg})
-    })
-}
+// exports.updateReview = (req, res) => {
+//     // Modifier le review en base de données qui correspond à l'id spécifé dans les params
+//     Review.update(req.body, {
+//         where: {
+//             id: req.params.id
+//         }
+//     }).then((review) => {
+//         if(review === null){
+//             const msg = "Review not found."
+//             res.json({message: msg})
+//         } else {
+//             const msg = "Review updated."
+//             res.json({message: msg, data: review})
+//         }
+//     }).catch((error) => {
+//         if(error instanceof UniqueConstraintError || error instanceof ValidationError){
+//             return res.status(400).json({message: error.message, data: error})
+//         } 
+//         const msg = "Impossible to update review."
+//         res.status(500).json({message: msg})
+//     })
+// }
 
 // // ==========
 // // DELETE
-exports.deleteReview = (req, res) => {
-    Review.findByPk(req.params.id)
-    .then(review => {
+// exports.deleteReview = (req, res) => {
+//     Review.findByPk(req.params.id)
+//     .then(review => {
 
-        if (review === null) {
-            const message = `Review not found.`
-            return res.status(404).json({ message })
+//         if (review === null) {
+//             const message = `Review not found.`
+//             return res.status(404).json({ message })
 
-        } else {
-            review.destroy({
-                where: {id: req.params.id}
-            })
+//         } else {
+//             review.destroy({
+//                 where: {id: req.params.id}
+//             })
 
-            .then (()=> {
-                const message = `The review ${review.UserId} have been deleted.`
-                res.json({ message, data: review })
-            })
+//             .then (()=> {
+//                 const message = `The review ${review.UserId} have been deleted.`
+//                 res.json({ message, data: review })
+//             })
 
-            .catch(error => {
-                const message = `Impossible to delete review.`
-                res.status(500).json({ message, data: error })
-            })
-        }
+//             .catch(error => {
+//                 const message = `Impossible to delete review.`
+//                 res.status(500).json({ message, data: error })
+//             })
+//         }
 
-    })
+//     })
 
-    .catch(error => {
-        res.status(400).json({ message: error.message, data: error })   
-    })      
-}
+//     .catch(error => {
+//         res.status(400).json({ message: error.message, data: error })   
+//     })      
+// }
 // =====================================================================================================

@@ -7,23 +7,23 @@ module.exports = (sequelize, DataTypes) => {
         },
         content: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         rating: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            // validate: {
-            //     min: 1,
-            //     max: 5,
-            // }
+            validate: {
+                min: 1,
+                max: 5
+            }
         },
         UserId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: false
         },
         BurgerId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: false
         },
     }, {
         timestamps: true,

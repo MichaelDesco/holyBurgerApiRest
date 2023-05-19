@@ -31,7 +31,7 @@ exports.findAllRestaurants = (req, res) => {
     })
     } else {
         Restaurant.findAll({ 
-            include: Burger
+            // include: Burger
         })
         .then((elements)=>{
             const message = 'Restaurants list has been retrieved from database.'
@@ -47,52 +47,19 @@ exports.findAllRestaurants = (req, res) => {
 
 // ==========
 // POST
-// exports.createRestaurant = (req, res) => {
-//     let newRestaurant = req.body;
-  
-//     // Utiliser Multer pour récupérer le fichier uploadé
-//     upload(req, res, (err) => {
-//       if (err) {
-//         console.error(err);
-//         return res.status(400).json({ message: "Erreur lors du chargement du fichier", error: err });
-//       }
-  
-//       // Créer le restaurant dans la base de données
-//       Restaurant.create({
-//         name: newRestaurant.name,
-//         address: newRestaurant.address,
-//         picture: req.file ? req.file.filename : null,
-//         telephone: newRestaurant.telephone,
-//         mail: newRestaurant.mail,
-//       })
-//         .then((el) => {
-//           const msg = 'Le restaurant a été créé.';
-//           res.json({ message: msg, data: el });
-//         })
-//         .catch(error => {
-//           if (error.name === 'SequelizeUniqueConstraintError') {
-//             return res.status(400).json({ message: 'Ce restaurant existe déjà, veuillez choisir un autre nom', data: error });
-//           }
-//           if (error.name === 'SequelizeValidationError') {
-//             return res.status(400).json({ message: error.message, data: error });
-//           }
-//           res.status(500).json(error);
-//         });
-//     });
-//   };
-  
-  
-  
 
 exports.createRestaurant = (req, res,) => {
     let newRestaurant = req.body;
     // Synchronisation du modèle avec la base de données
     Restaurant.create({
         name: req.body.name,
-        address: req.body.address,
+        number: req.body.number,
+        street: req.body.street, 
+        postCode: req.body.postCode,
+        city: req.body.city,
         picture: req.body.picture,
         telephone: req.body.telephone,
-        mail: req.body.mail,
+        mail: req.body.mail
     })
     .then (()=> {
         const msg = `The restaurant ${newRestaurant.name} have been created`;
@@ -115,28 +82,28 @@ exports.createRestaurant = (req, res,) => {
 
 // ==========
 // GET 
-exports.findRestaurantByPk = (req, res) => {
-    // Afficher le nom du restaurant qui correspond à l'id en paramètre
-    Restaurant.findByPk(req.params.id, 
-        { include: Burger }
-    )
-    .then((restaurant) => {
-        if (restaurant === null) {
-            const message = `Restaurant not found.`
-            res.status(404).json({ message })
-        } else {
-            const msg = `Restaurant ${restaurant.name} has been retrieved from database.`
-            res.json({ msg, data: restaurant })
-        }
-    })
-    .catch(error => {
-        if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
-            return res.status(400).json({ message: error.message, data: error })
-        }
-        const message = `Impossible to retrieve restaurant.`
-        res.status(500).json({ message, data: error })
-    })
-}
+// exports.findRestaurantByPk = (req, res) => {
+//     // Afficher le nom du restaurant qui correspond à l'id en paramètre
+//     Restaurant.findByPk(req.params.id, 
+//         // { include: Burger }
+//     )
+//     .then((restaurant) => {
+//         if (restaurant === null) {
+//             const message = `Restaurant not found.`
+//             res.status(404).json({ message })
+//         } else {
+//             const msg = `Restaurant ${restaurant.name} has been retrieved from database.`
+//             res.json({ msg, data: restaurant })
+//         }
+//     })
+//     .catch(error => {
+//         if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
+//             return res.status(400).json({ message: error.message, data: error })
+//         }
+//         const message = `Impossible to retrieve restaurant.`
+//         res.status(500).json({ message, data: error })
+//     })
+// }
 
 // exports.findBurgersByRestaurantId = (req, res) => {
 //     // Vérifier que l'ID du restaurant existe
@@ -163,98 +130,98 @@ exports.findRestaurantByPk = (req, res) => {
 //         res.status(500).json({ message, data: error })
 //     })
 // }
-exports.findBurgersByRestaurantId = (req, res) => {
-    // Vérifier que l'ID du restaurant existe
-    Restaurant.findByPk(req.params.id)
-    .then((restaurant) => {
-        if (restaurant === null) {
-            const message = `Restaurant not found.`
-            res.status(404).json({ message })
-        } else {
-            // Afficher les burgers qui correspondent à l'id du restaurant en paramètre
-            restaurant.getBurgers({ where: { RestaurantId: restaurant.id }})
-            .then((burgers) => {
-                const msg = `Burgers from restaurant ${restaurant.name} have been retrieved from database.`
-                res.json({ msg, data: burgers })
-            })
-            .catch(error => {
-                const message = `Impossible to retrieve burgers.`
-                res.status(500).json({ message, data: error })
-            })
-        }
-    })
-    .catch(error => {
-        const message = `Impossible to retrieve restaurant.`
-        res.status(500).json({ message, data: error })
-    })
-}
+// exports.findBurgersByRestaurantId = (req, res) => {
+//     // Vérifier que l'ID du restaurant existe
+//     Restaurant.findByPk(req.params.id)
+//     .then((restaurant) => {
+//         if (restaurant === null) {
+//             const message = `Restaurant not found.`
+//             res.status(404).json({ message })
+//         } else {
+//             // Afficher les burgers qui correspondent à l'id du restaurant en paramètre
+//             restaurant.getBurgers({ where: { RestaurantId: restaurant.id }})
+//             .then((burgers) => {
+//                 const msg = `Burgers from restaurant ${restaurant.name} have been retrieved from database.`
+//                 res.json({ msg, data: burgers })
+//             })
+//             .catch(error => {
+//                 const message = `Impossible to retrieve burgers.`
+//                 res.status(500).json({ message, data: error })
+//             })
+//         }
+//     })
+//     .catch(error => {
+//         const message = `Impossible to retrieve restaurant.`
+//         res.status(500).json({ message, data: error })
+//     })
+// }
 
 
 // // ==========
 // // PUT
-exports.updateRestaurant = (req, res) => {
-    Restaurant.update(req.body, {
-        where: {
-            id: req.params.id
-        }
-    })
+// exports.updateRestaurant = (req, res) => {
+//     Restaurant.update(req.body, {
+//         where: {
+//             id: req.params.id
+//         }
+//     })
 
-    .then((restaurant) => {
-        // retourner la valeur d'une promesse permet de transmettre une erreur le cas échéant, rappel nécessaire
-        return Restaurant.findByPk(req.params.id)
-            .then(restaurant => {
-                if (restaurant === null) {
-                    const message = `Restaurant not found.`
-                    res.status(404).json({ message })
-                } else {
-                    const message = `Restaurant ${restaurant.name} has been updated.`
-                    res.json({ message, data: restaurant });
-                }
-            })
-    })
+//     .then((restaurant) => {
+//         // retourner la valeur d'une promesse permet de transmettre une erreur le cas échéant, rappel nécessaire
+//         return Restaurant.findByPk(req.params.id)
+//             .then(restaurant => {
+//                 if (restaurant === null) {
+//                     const message = `Restaurant not found.`
+//                     res.status(404).json({ message })
+//                 } else {
+//                     const message = `Restaurant ${restaurant.name} has been updated.`
+//                     res.json({ message, data: restaurant });
+//                 }
+//             })
+//     })
     
-    .catch((error) => {
-        if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
-            return res.status(400).json({ message: error.message, data: error })
-        }
+//     .catch((error) => {
+//         if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+//             return res.status(400).json({ message: error.message, data: error })
+//         }
 
-        const message = `Impossible to update restaurant.`
-        res.status(500).json({ message, data: error })
-    })
-}
+//         const message = `Impossible to update restaurant.`
+//         res.status(500).json({ message, data: error })
+//     })
+// }
 
 // // ==========
 // // DELETE
-exports.deleteRestaurant = (req, res) => {
-    Restaurant.findByPk(req.params.id)
-    .then(restaurant => {
+// exports.deleteRestaurant = (req, res) => {
+//     Restaurant.findByPk(req.params.id)
+//     .then(restaurant => {
 
-        if (restaurant === null) {
-            const message = `Restaurant not found.`
-            return res.status(404).json({ message })
+//         if (restaurant === null) {
+//             const message = `Restaurant not found.`
+//             return res.status(404).json({ message })
 
-        } else {
-            restaurant.destroy({
-                where: {id: req.params.id}
-            })
+//         } else {
+//             restaurant.destroy({
+//                 where: {id: req.params.id}
+//             })
 
-            .then (()=> {
-                const message = `The restaurant ${restaurant.name} have been deleted.`
-                res.json({ message, data: restaurant })
-            })
+//             .then (()=> {
+//                 const message = `The restaurant ${restaurant.name} have been deleted.`
+//                 res.json({ message, data: restaurant })
+//             })
 
-            .catch(error => {
-                const message = `Impossible to delete restaurant.`
-                res.status(500).json({ message, data: error })
-            })
-        }
+//             .catch(error => {
+//                 const message = `Impossible to delete restaurant.`
+//                 res.status(500).json({ message, data: error })
+//             })
+//         }
 
-    })
+//     })
 
-    .catch(error => {
-        res.status(400).json({ message: error.message, data: error })   
-    })      
-}
+//     .catch(error => {
+//         res.status(400).json({ message: error.message, data: error })   
+//     })      
+// }
 // =====================================================================================================
 
 

@@ -15,10 +15,28 @@ module.exports = (sequelize , DataTypes) => {
                 }
             }
         },
-        address: {
-            type: DataTypes.JSON,
-            allowNull: false,
+        number: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
+        street: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        postCode: {
+            type: DataTypes.STRING,
+            validate: {
+                is: {
+                    args: /^([0-9]{5})$/,
+                    msg: "Please enter a valid 5-digit postal code"
+                }
+            }
+        },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+
         picture: {
             type: DataTypes.STRING,
             validate: {
