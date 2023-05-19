@@ -12,31 +12,34 @@ const { Op, UniqueConstraintError, ValidationError } = require('sequelize');
 exports.findAllRestaurants = (req, res) => {
     if(req.query.search){
         // notre recherche avec paramètres
-        Restaurant.findAll(
-            { where: { name: {[Op.like] : `%${req.query.search}%`} } }
-            )
-        .then((elements)=>{
-            if(!elements.length){
-                return res.json({message: "No restaurant found with this name"})    
-            }
-            const msg = 'Restaurants list has been retrieved from database.'
-            res.json({message: msg, data: elements})
-        })
-        .catch((error) => {
-            const msg = 'One error occured'
-            res.status(500).json({message: msg})
-        })
+        Restaurant.findAll({ 
+            where: { 
+                name: {[Op.like] : `%${req.query.search}%`
+            } 
+        } 
+    })
+    .then((elements)=>{
+        if(!elements.length){
+            return res.json({message: "No restaurant found with this name"})    
+        }
+        const message = 'Restaurants list has been retrieved from database.'
+        res.json({message, data: elements})
+    })
+    .catch((error) => {
+        const message = 'One error occured'
+        res.status(500).json({message})
+    })
     } else {
         Restaurant.findAll({ 
             include: Burger
         })
         .then((elements)=>{
-            const msg = 'Restaurants list has been retrieved from database.'
-            res.json({message: msg, data: elements})
+            const message = 'Restaurants list has been retrieved from database.'
+            res.json({message, data: elements})
         })
         .catch((error) => {
-            const msg = 'an error occured'
-            res.status(500).json({message: msg})
+            const message = 'an error occured'
+            res.status(500).json({message})
         })
     }
 }

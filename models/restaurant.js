@@ -21,29 +21,29 @@ module.exports = (sequelize , DataTypes) => {
         },
         picture: {
             type: DataTypes.STRING,
-            // validate: {
-            //     is: {
-            //         args: /^.*\.(jpg|JPG|jpeg|JPEG|png|PNG)$/,
-            //         msg: "The picture must be a JPG or PNG file"
-            //     }
-            // }
+            validate: {
+                is: {
+                    args: /^.*\.(jpg|JPG|jpeg|JPEG|png|PNG)$/,
+                    msg: "The picture must be a JPG or PNG file"
+                }
+            }
         },
         telephone: {
             type: DataTypes.STRING,
-            // validate: {
-            //     is: {
-            //         args: /^([0-9]{10})$/,
-            //         msg: "Please enter a valid 8-digit phone number"
-            //     }
-            // }
+            validate: {
+                is: {
+                    args: /^([0-9]{10})$/,
+                    msg: "Please enter a valid 8-digit phone number"
+                }
+            }
         },
         mail: {
             type: DataTypes.STRING,
-            // validate: {
-            //     isEmail: {
-            //         msg: "Please enter a valid email address"
-            //     }
-            // }
+            validate: {
+                isEmail: {
+                    msg: "Please enter a valid email address"
+                }
+            }
         },
     }, {
         timestamps: true,

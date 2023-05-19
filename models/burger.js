@@ -15,16 +15,6 @@ module.exports = (sequelize , DataTypes) => {
                 }
             }
         },
-        cooker: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-              len: {
-                args: [2, 50],
-                msg: "Le nom du cuisinier doit comporter entre 2 et 50 caractères"
-              }
-            }
-        },
         price: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -56,10 +46,6 @@ module.exports = (sequelize , DataTypes) => {
               }
             }
         },
-        garniture2: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
         fromage: {
             type: DataTypes.STRING,
             allowNull: true
@@ -85,7 +71,7 @@ module.exports = (sequelize , DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-              model: 'Restaurants',
+              model: 'Restaurant',
               key: 'id',
               onDelete: 'CASCADE'
             }

@@ -6,8 +6,7 @@ const authController = require('../controllers/authController')
 router
     .route('/')
     .get(burgersController.findAllBurgers)
-    // .post(authController.protect, authController.restrictTo('restorer','admin', 'superadmin'), burgersController.createBurger)
-    .post(burgersController.createBurger)
+    .post(authController.protect, authController.restrictTo('restorer'), burgersController.createBurger)
 
     router
     .route('/withReview')
