@@ -1,5 +1,5 @@
 let burgers = require('../mock-burgers');
-const { Burger, Review, Restaurant, sequelize } = require('../db/sequelize');
+const { Burger, Review, sequelize } = require('../db/sequelize');
 const { Op, UniqueConstraintError, ValidationError, QueryTypes, where } = require('sequelize');
 // =====================================================================================================
 
@@ -13,9 +13,9 @@ exports.findAllBurgers = (req, res) => {
     if(req.query.search){
         // notre recherche avec paramètres
         Burger.findAll(
-            // { where: { name: {[Op.like] : `%${req.query.search}%`} },
-            //   include: [Review, Restaurant]
-            // }
+            { where: { name: {[Op.like] : `%${req.query.search}%`} },
+              include: [Review]
+            }
         )
         .then((elements)=>{
             if(!elements.length){
@@ -30,7 +30,7 @@ exports.findAllBurgers = (req, res) => {
         })
     } else {
         Burger.findAll({ 
-            include: [Review , Restaurant],
+            include: [Review],
         })
         .then((elements)=>{
             const msg = 'Burgers list has been retrieved from database.'
@@ -43,6 +43,28 @@ exports.findAllBurgers = (req, res) => {
     }
 }
 
+exports.createBurger = (req, res) => {
+    console.log(req.body);
+    let newBurger = req.body;
+    // Synchronisation du modèle avec la base de données
+    Burger.create({
+        name: req.body.name,
+        price: req.body.price,
+        garniture: req.body.garniture,
+        fromage: req.body.fromage,
+        sauce: req.body.sauce
+    })
+    .then (()=> {
+        const message = `The burger ${newBurger.name} have been created`;
+        res.json({ message, data: newBurger })
+    })
+    .catch((error) => {
+        if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+            return res.status(400).json({ message: error.message, data: error }) 
+        }
+        res.status(500).json(error)
+    })
+}
 // exports.getBurgersByRestaurant = async (req, res) => {
 //     const { id } = req.params;
   
@@ -125,30 +147,7 @@ exports.findAllBurgers = (req, res) => {
 
 // ==========
 // POST
-exports.createBurger = (req, res) => {
-    console.log(req.body);
-    let newBurger = req.body;
-    // Synchronisation du modèle avec la base de données
-    Burger.create({
-        name: req.body.name,
-        price: req.body.price,
-        picture: req.body.picture,
-        garniture: req.body.garniture,
-        fromage: req.body.fromage,
-        sauce: req.body.sauce,
-        RestaurantId: req.body.RestaurantId
-    })
-    .then (()=> {
-        const message = `The burger ${newBurger.name} have been created`;
-        res.json({ message, data: newBurger })
-    })
-    .catch((error) => {
-        if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
-            return res.status(400).json({ message: error.message, data: error }) 
-        }
-        res.status(500).json(error)
-    })
-}
+
 // =====================================================================================================
 
 
@@ -157,28 +156,28 @@ exports.createBurger = (req, res) => {
 
 // ==========
 // GET 
-// exports.findBurgerByPk = (req, res) => {
-//     // Afficher le nom du restaurant qui correspond à l'id en paramètre
-//     Burger.findByPk(req.params.id, 
-//         { include: Review, Restaurant }
-//     )
-//     .then((burger) => {
-//         if (burger === null) {
-//             const message = `Restaurant not found.`
-//             res.status(404).json({ message })
-//         } else {
-//             const msg = `Restaurant ${burger.name} has been retrieved from database.`
-//             res.json({ msg, data: burger })
-//         }
-//     })
-//     .catch(error => {
-//         if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
-//             return res.status(400).json({ message: error.message, data: error })
-//         }
-//         const message = `Impossible to retrieve restaurant.`
-//         res.status(500).json({ message, data: error })
-//     })
-// }
+exports.findBurgerByPk = (req, res) => {
+    // Afficher le nom du restaurant qui correspond à l'id en paramètre
+    Burger.findByPk(req.params.id, 
+        { include: Review }
+    )
+    .then((burger) => {
+        if (burger === null) {
+            const message = `Restaurant not found.`
+            res.status(404).json({ message })
+        } else {
+            const msg = `Restaurant ${burger.name} has been retrieved from database.`
+            res.json({ msg, data: burger })
+        }
+    })
+    .catch(error => {
+        if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
+            return res.status(400).json({ message: error.message, data: error })
+        }
+        const message = `Impossible to retrieve restaurant.`
+        res.status(500).json({ message, data: error })
+    })
+}
 
 // // // ==========
 // // // PUT

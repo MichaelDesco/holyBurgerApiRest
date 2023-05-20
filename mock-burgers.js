@@ -8,6 +8,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"fromage",
         RestaurantId: 1,
+        RestaurantName: "WestBay",
         created: new Date()
     },
     {
@@ -19,6 +20,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 1,
+        RestaurantName: "WestBay",
         created: new Date()
     },
     {
@@ -30,6 +32,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 2,
+        RestaurantName: "Resto Ranch",
         created: new Date()
     },
     {
@@ -41,6 +44,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 2,
+        RestaurantName: "Resto Ranch",
         created: new Date()
     },
     {
@@ -52,6 +56,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 2,
+        RestaurantName: "Resto Ranch",
         created: new Date()
     },
     {
@@ -63,6 +68,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 3,
+        RestaurantName: "Resto Ranch",
         created: new Date()
     },
     {
@@ -74,6 +80,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 3,
+        RestaurantName: "Sunny",
         created: new Date()
     },
     {
@@ -85,6 +92,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 3,
+        RestaurantName: "Sunny",
         created: new Date()
     },
     {
@@ -96,6 +104,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 4,
+        RestaurantName: "Le Hambourg",
         created: new Date()
     },
     {
@@ -107,6 +116,7 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 4,
+        RestaurantName: "Le Hambourg",
         created: new Date()
     }
 ]

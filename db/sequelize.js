@@ -20,95 +20,96 @@ const Review = ReviewSequelize(sequelize, DataTypes);
 
 // Define table relationships
 User.hasMany(Review, {
-  // foreignKey: {
-  //   allowNull: false
-  // }
+  foreignKey: {
+    allowNull: false
+  }
 });
 Review.belongsTo(User);
 
 Burger.hasMany(Review, {
-  // foreignKey: {
-  //   allowNull: false
-  // }
+  foreignKey: {
+    allowNull: false
+  }
 });
 Review.belongsTo(Burger);
 
 Restaurant.hasMany(Burger, {
-  // foreignKey: {
-  //   allowNull: false
-  // }
+  foreignKey: {
+    allowNull: true
+  }
 });
 Burger.belongsTo(Restaurant);
 
-const initDb = () => {
-  return sequelize.sync({force: true}) 
-   .then(() => {
-    restaurants.forEach((element) => {
-      console.log("resto", element);
-      Restaurant.create({
-        name: element.name,
-        number: element.number,
-        street: element.street,
-        postCode: element.postCode,
-        city: element.city,
-        telephone: element.telephone,
-        picture: element.picture,
-        mail: element.mail
-      });
-    })
+// const initDb = () => {
+//   return sequelize.sync({force: true}) 
+//    .then(() => {
+//     restaurants.forEach((element) => {
+//       console.log("resto", element);
+//       Restaurant.create({
+//         name: element.name,
+//         number: element.number,
+//         street: element.street,
+//         postCode: element.postCode,
+//         city: element.city,
+//         telephone: element.telephone,
+//         picture: element.picture,
+//         mail: element.mail
+//       });
+//     })
 
-    burgers.forEach((element) => {
-      console.log("burger", element);
-      Burger.create({
-        name: element.name,
-        price: element.price,
-        picture: element.picture,
-        garniture: element.garniture,
-        fromage: element.fromage,
-        legumes: element.legumes,
-        sauce: element.sauce,
-        RestaurantId: element.RestaurantId
-      });
-    });
+//     burgers.forEach((element) => {
+//       console.log("burger", element);
+//       Burger.create({
+//         name: element.name,
+//         price: element.price,
+//         picture: element.picture,
+//         garniture: element.garniture,
+//         fromage: element.fromage,
+//         legumes: element.legumes,
+//         sauce: element.sauce,
+//         RestaurantId: element.RestaurantId,
+//         RestaurantName: element.RestaurantName
+//       });
+//     });
 
-    bcrypt.hash('mdp0', 10)
-      .then((hash) => {
-        User.create({
-          username: 'admin',
-          password: hash,
-          roles: ['admin', 'superadmin'],
-          mail: 'admin@gmail.com',
-          picture: '/images/licorn.png'
-        })
-      })
-      .catch(err => console.log(err))
+//     bcrypt.hash('mdp0', 10)
+//       .then((hash) => {
+//         User.create({
+//           username: 'admin',
+//           password: hash,
+//           roles: ['admin', 'superadmin'],
+//           mail: 'admin@gmail.com',
+//           picture: '/images/licorn.png'
+//         })
+//       })
+//       .catch(err => console.log(err))
 
-    bcrypt.hash('mdp1', 10)
-      .then((hash) => {
-        User.create({
-          username: 'user1',
-          password: hash,
-          roles: ['taster'],
-          mail: 'user1@mail.com',
-          picture: '/images/chat.png'
-        })
-      })
-      .catch(err => console.log(err))
+//     bcrypt.hash('mdp1', 10)
+//       .then((hash) => {
+//         User.create({
+//           username: 'user1',
+//           password: hash,
+//           roles: ['taster'],
+//           mail: 'user1@mail.com',
+//           picture: '/images/chat.png'
+//         })
+//       })
+//       .catch(err => console.log(err))
 
-    bcrypt.hash('mdp2', 10)
-      .then((hash) => {
-        User.create({
-          username: 'user2',
-          password: hash,
-          roles: ['restorer'],
-          mail: 'user2@gmail.com',
-          picture: '/images/singe.png'
-        })
-      })
-      .catch (err => console.log(err))
-   })
-  .catch(error => console.log(error));
-}
+//     bcrypt.hash('mdp2', 10)
+//       .then((hash) => {
+//         User.create({
+//           username: 'user2',
+//           password: hash,
+//           roles: ['restorer'],
+//           mail: 'user2@gmail.com',
+//           picture: '/images/singe.png'
+//         })
+//       })
+//       .catch (err => console.log(err))
+//    })
+//   .catch(error => console.log(error));
+// }
 
 
 sequelize.authenticate()
@@ -117,5 +118,5 @@ sequelize.authenticate()
 
 
 module.exports = {
-    sequelize ,Restaurant, Burger, User, Review, initDb
+    sequelize, User, Restaurant, Burger, Review
 }

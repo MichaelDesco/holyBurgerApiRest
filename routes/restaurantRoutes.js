@@ -9,15 +9,15 @@ router
   .get(restaurantsController.findAllRestaurants)
   .post(authController.protect, restaurantsController.createRestaurant);
 
-// router
-//   .route('/:id')
-//   .get(restaurantsController.findRestaurantByPk)
+router
+  .route('/:id')
+  .get(restaurantsController.findRestaurantByPk)
 //   .put(authController.protect, authController.restrictTo('restorer','admin', 'superadmin'), restaurantsController.updateRestaurant)
 //   .delete(authController.protect, authController.restrictTo('superadmin'), restaurantsController.deleteRestaurant);
 
-// router
-//   .route('/:id/burgers')
-//   .get(restaurantsController.findBurgersByRestaurantId);
+router
+  .route('/:id/burgers')
+  .get(restaurantsController.findBurgersByRestaurantId);
 
 module.exports = router;
 

@@ -1,3 +1,5 @@
+const { on } = require("nodemon")
+
 module.exports = (sequelize , DataTypes) => {
     return sequelize.define('Burger', {
         id: {
@@ -30,12 +32,7 @@ module.exports = (sequelize , DataTypes) => {
         },
         picture: {
             type: DataTypes.STRING,
-            validate: {
-                is: {
-                    args: /^.*\.(jpg|JPG|jpeg|JPEG|png|PNG)$/,
-                    msg: "The picture must be a JPG or PNG file"
-                }
-            }
+            allowNull: true,
         },
         garniture: {
             type: DataTypes.STRING,
@@ -61,12 +58,7 @@ module.exports = (sequelize , DataTypes) => {
         },
         RestaurantId: {
             type: DataTypes.INTEGER,
-            // allowNull: false,
-            // references: {
-            //   model: 'Restaurant',
-            //   key: 'id',
-            //   onDelete: 'CASCADE'
-            // }
+            allowNull: true,
         },
     }, {
         timestamps: true,
@@ -74,3 +66,4 @@ module.exports = (sequelize , DataTypes) => {
         updatedAt: false
     })
 }
+

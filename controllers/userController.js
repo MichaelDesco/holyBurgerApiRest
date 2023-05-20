@@ -1,6 +1,5 @@
-const { ValidationError, UniqueConstraintError } = require('sequelize')
+const { Op, UniqueConstraintError, ValidationError } = require('sequelize')
 const { User } = require('../db/sequelize')
-const { Op } = require('sequelize')
 const jwt = require('jsonwebtoken')
 
 exports.findAllUsers = (req, res) => {
@@ -15,44 +14,44 @@ exports.findAllUsers = (req, res) => {
     })
 }
 
-// exports.findOneUser = (req, res) => {
-//     User.findOne({
-//         where: {
-//             id: req.params.id
-//         }
-//     }).then((user) => {
-//         if(user === null){
-//             const msg = "User not found."
-//             res.json({message: msg})
-//         } else {
-//             const msg = "User found."
-//             res.json({message: msg, data: user})
-//         }
-//     }).catch((error) => {
-//         const msg = "Impossible to find user."
-//         res.status(500).json({message: msg})
-//     })
-// }
+exports.findOneUser = (req, res) => {
+    User.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then((user) => {
+        if(user === null){
+            const msg = "User not found."
+            res.json({message: msg})
+        } else {
+            const msg = "User found."
+            res.json({message: msg, data: user})
+        }
+    }).catch((error) => {
+        const msg = "Impossible to find user."
+        res.status(500).json({message: msg})
+    })
+}
 
 
-// exports.findRoles = (req, res) => {
-//     User.findAll({
-//         where: {
-//             roles: req.params.roles
-//         }
-//     }).then((user) => {
-//         if(user === null){
-//             const msg = "User not found."
-//             res.json({message: msg})
-//         } else {
-//             const msg = "User found."
-//             res.json({message: msg, data: user})
-//         }
-//     }).catch((error) => {
-//         const msg = "Impossible to find user."
-//         res.status(500).json({message: msg})
-//     })
-// }
+exports.findRoles = (req, res) => {
+    User.findAll({
+        where: {
+            roles: req.params.roles
+        }
+    }).then((user) => {
+        if(user === null){
+            const msg = "User not found."
+            res.json({message: msg})
+        } else {
+            const msg = "User found."
+            res.json({message: msg, data: user})
+        }
+    }).catch((error) => {
+        const msg = "Impossible to find user."
+        res.status(500).json({message: msg})
+    })
+}
 
 // exports.createUser = (req, res) => {
 //     User.create({

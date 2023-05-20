@@ -8,13 +8,13 @@ router
     .route('/')
     .get(authController.protect, userController.findAllUsers)
 
-    // router
-    // .route('/:id')
-    // .get(authController.protect, userController.findOneUser)
+    router
+    .route('/:id')
+    .get(authController.protect, userController.findOneUser)
 
-    // router
-    // .route('/:id/:roles')
-    // .get(authController.protect,userController.findRoles)
+    router
+    .route('/:id/:roles')
+    .get(authController.protect,userController.findRoles)
 
 router
     .route('/login')

@@ -31,7 +31,7 @@ exports.findAllRestaurants = (req, res) => {
     })
     } else {
         Restaurant.findAll({ 
-            // include: Burger
+            include: Burger
         })
         .then((elements)=>{
             const message = 'Restaurants list has been retrieved from database.'
@@ -62,8 +62,8 @@ exports.createRestaurant = (req, res,) => {
         mail: req.body.mail
     })
     .then (()=> {
-        const msg = `The restaurant ${newRestaurant.name} have been created`;
-        res.json({ message: msg, data: newRestaurant })
+        const message = `The restaurant ${newRestaurant.name} have been created`;
+        res.json({ message, data: newRestaurant })
     })
     .catch((error) => {
         if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
@@ -82,54 +82,54 @@ exports.createRestaurant = (req, res,) => {
 
 // ==========
 // GET 
-// exports.findRestaurantByPk = (req, res) => {
-//     // Afficher le nom du restaurant qui correspond à l'id en paramètre
-//     Restaurant.findByPk(req.params.id, 
-//         // { include: Burger }
-//     )
-//     .then((restaurant) => {
-//         if (restaurant === null) {
-//             const message = `Restaurant not found.`
-//             res.status(404).json({ message })
-//         } else {
-//             const msg = `Restaurant ${restaurant.name} has been retrieved from database.`
-//             res.json({ msg, data: restaurant })
-//         }
-//     })
-//     .catch(error => {
-//         if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
-//             return res.status(400).json({ message: error.message, data: error })
-//         }
-//         const message = `Impossible to retrieve restaurant.`
-//         res.status(500).json({ message, data: error })
-//     })
-// }
+exports.findRestaurantByPk = (req, res) => {
+    // Afficher le nom du restaurant qui correspond à l'id en paramètre
+    Restaurant.findByPk(req.params.id, 
+        { include: Burger }
+    )
+    .then((restaurant) => {
+        if (restaurant === null) {
+            const message = `Restaurant not found.`
+            res.status(404).json({ message })
+        } else {
+            const msg = `Restaurant ${restaurant.name} has been retrieved from database.`
+            res.json({ msg, data: restaurant })
+        }
+    })
+    .catch(error => {
+        if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
+            return res.status(400).json({ message: error.message, data: error })
+        }
+        const message = `Impossible to retrieve restaurant.`
+        res.status(500).json({ message, data: error })
+    })
+}
 
-// exports.findBurgersByRestaurantId = (req, res) => {
-//     // Vérifier que l'ID du restaurant existe
-//     Restaurant.findByPk(req.params.id)
-//     .then((restaurant) => {
-//         if (restaurant === null) {
-//             const message = `Restaurant not found.`
-//             res.status(404).json({ message })
-//         } else {
-//             // Afficher les burgers qui correspondent à l'id du restaurant en paramètre
-//             restaurant.getBurgers()
-//             .then((burgers) => {
-//                 const msg = `Burgers from restaurant ${restaurant.name} have been retrieved from database.`
-//                 res.json({ msg, data: burgers })
-//             })
-//             .catch(error => {
-//                 const message = `Impossible to retrieve burgers.`
-//                 res.status(500).json({ message, data: error })
-//             })
-//         }
-//     })
-//     .catch(error => {
-//         const message = `Impossible to retrieve restaurant.`
-//         res.status(500).json({ message, data: error })
-//     })
-// }
+exports.findBurgersByRestaurantId = (req, res) => {
+    // Vérifier que l'ID du restaurant existe
+    Restaurant.findByPk(req.params.id)
+    .then((restaurant) => {
+        if (restaurant === null) {
+            const message = `Restaurant not found.`
+            res.status(404).json({ message })
+        } else {
+            // Afficher les burgers qui correspondent à l'id du restaurant en paramètre
+            restaurant.getBurgers()
+            .then((burgers) => {
+                const msg = `Burgers from restaurant ${restaurant.name} have been retrieved from database.`
+                res.json({ msg, data: burgers })
+            })
+            .catch(error => {
+                const message = `Impossible to retrieve burgers.`
+                res.status(500).json({ message, data: error })
+            })
+        }
+    })
+    .catch(error => {
+        const message = `Impossible to retrieve restaurant.`
+        res.status(500).json({ message, data: error })
+    })
+}
 // exports.findBurgersByRestaurantId = (req, res) => {
 //     // Vérifier que l'ID du restaurant existe
 //     Restaurant.findByPk(req.params.id)

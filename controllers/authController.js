@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User, Review } = require('../db/sequelize');
 const { Op, UniqueConstraintError, ValidationError } = require('sequelize');
-// const e = require('cors');
+const e = require('cors');
 const private_key = require('../auth/private_key.js');
 
 exports.login = (req, res) => {
