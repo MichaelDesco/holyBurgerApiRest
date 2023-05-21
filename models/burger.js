@@ -1,5 +1,7 @@
+// module qui permet de faire des tests afin de vérifier que le code fonctionne correctement.
 const { on } = require("nodemon")
 
+// 
 module.exports = (sequelize , DataTypes) => {
     return sequelize.define('Burger', {
         id: {
@@ -58,7 +60,13 @@ module.exports = (sequelize , DataTypes) => {
         },
         RestaurantId: {
             type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+            references: {
+                model: 'Restaurant',
+                key: 'id'
+            },
         },
     }, {
         timestamps: true,

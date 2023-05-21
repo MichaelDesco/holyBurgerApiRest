@@ -19,6 +19,20 @@ const User = UserSequelize(sequelize, DataTypes);
 const Review = ReviewSequelize(sequelize, DataTypes);
 
 // Define table relationships
+// Restaurant.hasOne(User, {
+//   foreignKey: {
+//     id: 'RestaurantId',
+//   }
+// });
+// User.belongsTo(Restaurant);
+
+Restaurant.hasMany(Burger, {
+  foreignKey: {
+    id: 'RestaurantId',
+  }
+});
+Burger.belongsTo(Restaurant);
+
 User.hasMany(Review, {
   foreignKey: {
     allowNull: false
@@ -33,12 +47,6 @@ Burger.hasMany(Review, {
 });
 Review.belongsTo(Burger);
 
-Restaurant.hasMany(Burger, {
-  foreignKey: {
-    allowNull: true
-  }
-});
-Burger.belongsTo(Restaurant);
 
 // const initDb = () => {
 //   return sequelize.sync({force: true}) 

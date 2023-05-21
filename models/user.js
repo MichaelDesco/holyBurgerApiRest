@@ -1,3 +1,5 @@
+const { on } = require("nodemon")
+
 const userRoles = ['taster','restorer', 'admin', 'superadmin']
 
 module.exports = (sequelize, DataTypes) => {
@@ -56,7 +58,15 @@ module.exports = (sequelize, DataTypes) => {
           msg: "The picture must be a JPG or PNG file"
         }
       }
-    }
+    },
+  //   RestaurantId: {
+  //     type: DataTypes.INTEGER,
+  //     allowNull: true,
+  //     references: {
+  //         model: 'Restaurant',
+  //         key: 'id'
+  //     },
+  // },
   }, {
     timestamps: true,
     createdAt: 'created',

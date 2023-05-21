@@ -1,5 +1,5 @@
 let burgers = require('../mock-burgers');
-const { Burger, Review, sequelize } = require('../db/sequelize');
+const { Burger, Review, sequelize, Restaurant } = require('../db/sequelize');
 const { Op, UniqueConstraintError, ValidationError, QueryTypes, where } = require('sequelize');
 // =====================================================================================================
 
@@ -43,28 +43,38 @@ exports.findAllBurgers = (req, res) => {
     }
 }
 
-exports.createBurger = (req, res) => {
-    console.log(req.body);
-    let newBurger = req.body;
-    // Synchronisation du modèle avec la base de données
-    Burger.create({
-        name: req.body.name,
-        price: req.body.price,
-        garniture: req.body.garniture,
-        fromage: req.body.fromage,
-        sauce: req.body.sauce
-    })
-    .then (()=> {
-        const message = `The burger ${newBurger.name} have been created`;
-        res.json({ message, data: newBurger })
-    })
-    .catch((error) => {
-        if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
-            return res.status(400).json({ message: error.message, data: error }) 
-        }
-        res.status(500).json(error)
-    })
-}
+exports.createBurger = async (req, res) => {
+    try {
+      const { name, price, garniture, fromage, sauce } = req.body;
+      const restaurantId = req.body.RestaurantId;
+  
+      const restaurant = await Restaurant.findByPk(restaurantId);
+      if (!restaurant) {
+        return res.status(404).json({ message: 'Restaurant non trouvé.' });
+      }
+  
+      const burger = await Burger.create({
+        name: name,
+        price: price,
+        garniture: garniture,
+        fromage: fromage,
+        sauce: sauce,
+        RestaurantId: restaurantId
+      });
+  
+      console.log('Burger créé avec succès.');
+      const message = `The burger ${burger.name} has been created`;
+      res.json({ message, data: burger });
+    } catch (error) {
+      console.log('Une erreur s\'est produite lors de la création du burger :', error);
+      if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+        return res.status(400).json({ message: error.message, data: error });
+      }
+      res.status(500).json(error);
+    }
+  };
+  
+  
 // exports.getBurgersByRestaurant = async (req, res) => {
 //     const { id } = req.params;
   
