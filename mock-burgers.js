@@ -6,9 +6,8 @@ const burgers = [
         picture: "/images/fuego-inferno.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        sauce:"fromage",
+        sauce:"Spicy",
         RestaurantId: 1,
-        RestaurantName: "WestBay",
         created: new Date()
     },
     {
@@ -18,9 +17,8 @@ const burgers = [
         picture: "/images/mac-attack.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        sauce:"ketchup",
+        sauce:"fromage poivre",
         RestaurantId: 1,
-        RestaurantName: "WestBay",
         created: new Date()
     },
     {
@@ -28,11 +26,10 @@ const burgers = [
         name: 'Le Veggie Delight',
         price: 6,
         picture: "/images/veggie-delight.jpg",
-        garniture:"boeuf",
+        garniture:"Haricots rouges, maïs",
         fromage:"cheddar",
-        sauce:"ketchup",
+        sauce:"avocat basilic",
         RestaurantId: 2,
-        RestaurantName: "Resto Ranch",
         created: new Date()
     },
     {
@@ -44,7 +41,6 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 2,
-        RestaurantName: "Resto Ranch",
         created: new Date()
     },
     {
@@ -53,10 +49,9 @@ const burgers = [
         price: 9,
         picture: "/images/breakfast-bomb.jpg",
         garniture:"boeuf",
-        fromage:"cheddar",
+        fromage:"chèvre",
         sauce:"ketchup",
         RestaurantId: 2,
-        RestaurantName: "Resto Ranch",
         created: new Date()
     },
     {
@@ -66,9 +61,8 @@ const burgers = [
         picture: "/images/smokin-bbq.jpg",
         garniture:"boeuf",
         fromage:"cheddar",
-        sauce:"ketchup",
+        sauce:"barbecue",
         RestaurantId: 3,
-        RestaurantName: "Resto Ranch",
         created: new Date()
     },
     {
@@ -77,10 +71,9 @@ const burgers = [
         price: 8,
         picture: "/images/truffle-shuffle.jpg",
         garniture:"boeuf",
-        fromage:"cheddar",
-        sauce:"ketchup",
+        fromage:"3 fromages",
+        sauce:"paprika crème",
         RestaurantId: 3,
-        RestaurantName: "Sunny",
         created: new Date()
     },
     {
@@ -89,10 +82,9 @@ const burgers = [
         price: 7,
         picture: "/images/blue-hawaiian.jpg",
         garniture:"boeuf",
-        fromage:"cheddar",
-        sauce:"ketchup",
+        fromage:"emmental",
+        sauce:"biggy",
         RestaurantId: 3,
-        RestaurantName: "Sunny",
         created: new Date()
     },
     {
@@ -104,7 +96,6 @@ const burgers = [
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 4,
-        RestaurantName: "Le Hambourg",
         created: new Date()
     },
     {
@@ -112,11 +103,10 @@ const burgers = [
         name: 'Le Nacho Libre',
         price: 8,
         picture: "/images/nacho-libre.jpg",
-        garniture:"boeuf",
+        garniture:"poulet",
         fromage:"cheddar",
         sauce:"ketchup",
         RestaurantId: 4,
-        RestaurantName: "Le Hambourg",
         created: new Date()
     }
 ]

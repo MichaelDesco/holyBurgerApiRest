@@ -7,7 +7,7 @@ router
     .route('/')
     .get(reviewController.findAllReviews)
     // .post(authController.protect, authController.restrictTo('taster'), reviewController.createReview)
-    .post(authController.protect, reviewController.createReview)
+    // .post(authController.protect, reviewController.createReview)
 
 // router
 //     .route('/:id')

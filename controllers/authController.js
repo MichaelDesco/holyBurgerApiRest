@@ -5,6 +5,34 @@ const { Op, UniqueConstraintError, ValidationError } = require('sequelize');
 const e = require('cors');
 const private_key = require('../auth/private_key.js');
 
+exports.signup = (req, res) => {
+    // on récupère le password est on le hash
+    bcrypt.hash(req.body.password, 10)
+    .then((hash) => {
+        // on crée un nouvel utilisateur
+        return User.create({
+            roles: req.body.roles,
+            username: req.body.username,
+            password: hash,
+            mail: req.body.mail,
+            picture: req.body.picture,
+        })
+        .then((userCreated) => {
+            const token = signToken(userCreated.id)
+            const message = `user ${userCreated.username} created`
+            res.json({ message, user: userCreated, token })
+        })
+    })
+    .catch (error => {
+        if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
+            return res.status(400).json({ message: error.message })
+        }
+        const message = 'An error occured, please try again later'
+        res.status(500).json({ message})
+    })
+}
+
+
 exports.login = (req, res) => {
     if (!req.body.username || !req.body.password) {
         const message = "user id and password are required"
@@ -42,39 +70,10 @@ exports.login = (req, res) => {
         })
 }
 
-
-exports.signup = (req, res) => {
-    // on récupère le password est on le hash
-    bcrypt.hash(req.body.password, 10)
-    .then((hash) => {
-        // on crée un nouvel utilisateur
-        return User.create({
-            roles: req.body.roles,
-            username: req.body.username,
-            password: hash,
-            mail: req.body.mail,
-            picture: req.body.picture,
-        })
-        .then((userCreated) => {
-            const token = signToken(userCreated.id)
-            const message = `user ${userCreated.username} created`
-            res.json({ message, user: userCreated, token })
-        })
-    })
-    .catch (error => {
-        if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
-            return res.status(400).json({ message: error.message })
-        }
-        const message = 'An error occured, please try again later'
-        res.status(500).json({ message})
-    })
-}
-
-
 exports.protect = (req, res, next) => {
     const authorizationHeader = req.headers.authorization
 
-    console.log(req.headers)
+    console.log("protect",req.headers)
 
     if (!authorizationHeader) {
         const message = 'Token is necessary to authenticate'
@@ -82,6 +81,7 @@ exports.protect = (req, res, next) => {
     }
     try {
     const token = authorizationHeader.split(' ')[1];
+    console.log("token",token)
     const decoded = jwt.verify(token, private_key);
     req.userId = decoded.data
     } catch (error) {

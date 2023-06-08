@@ -34,6 +34,7 @@ module.exports = (sequelize , DataTypes) => {
         },
         picture: {
             type: DataTypes.STRING,
+            defaultValue: "https://www.sbburger.fr/wp-content/uploads/2021/07/Resized_5A2A3065.jpg",
             allowNull: true,
         },
         garniture: {
@@ -41,7 +42,7 @@ module.exports = (sequelize , DataTypes) => {
             allowNull: false,
             validate: {
               notNull: {
-                msg: "Veuillez remplir le champ de la garniture"
+                msg: "Please fill in the field for the garnish"
               }
             }
         },
@@ -54,20 +55,14 @@ module.exports = (sequelize , DataTypes) => {
             allowNull: false,
             validate: {
               notNull: {
-                msg: "Veuillez remplir le champ de la sauce"
+                msg: "Please fill in the field for the sauce"
               }
             }
         },
         RestaurantId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-            references: {
-                model: 'Restaurant',
-                key: 'id'
-            },
-        },
+        }
     }, {
         timestamps: true,
         createdAt: 'created',

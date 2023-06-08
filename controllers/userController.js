@@ -1,7 +1,11 @@
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const { Op, UniqueConstraintError, ValidationError } = require('sequelize')
 const { User } = require('../db/sequelize')
-const jwt = require('jsonwebtoken')
+const e = require('cors');
+const private_key = require('../auth/private_key.js');
 
+// GET
 exports.findAllUsers = (req, res) => {
     User.scope('withoutPassword').findAll()
     .then((elements)=>{
@@ -53,71 +57,68 @@ exports.findRoles = (req, res) => {
     })
 }
 
-// exports.createUser = (req, res) => {
-//     User.create({
-//         roles: req.body.roles,
-//         username: req.body.username,
-//         password: req.body.password,
-//         mail: req.body.mail,
-//         picture: req.body.picture,
-//     }).then(result => {
-//         const message = "User created"
-//         res.json({message, data: result})
-//     }).catch(error => {
-//         if(error instanceof UniqueConstraintError || error instanceof ValidationError){
-//             return res.status(400).json({message: error.message, data: error})
-//         } 
-//         const message = "User not created"
-//         res.status(500).json({message, data: error})
-//     })
-// }
-
-// exports.updateUser = (req, res) => {
-//     User.update(req.body, {
-//         where: {
-//             id: req.params.id
-//         }
-//     }).then((user) => {
-//         if(user === null){
-//             const msg = "User not found."
-//             res.json({message: msg})
-//         } else {
-//             const msg = "User updated."
-//             res.json({message: msg, data: user})
-//         }
-//     }).catch((error) => {
-//         if(error instanceof UniqueConstraintError || error instanceof ValidationError){
-//             return res.status(400).json({message: error.message, data: error})
-//         } 
-//         const msg = "Impossible to update user."
-//         res.status(500).json({message: msg})
-//     })
-// }
-
-// exports.deleteUser = (req, res) => {
-//     User.destroy({
-//         where: {
-//             id: req.params.id
-//         }
-//     }).then((user) => {
-//         if(user === null){
-//             const message = "User not found."
-//             return res.status(404).json({message})
-//         } else {
-//             user.destroy({
-//                 where: {id: req.params.id}
-//             })
-//             .then (() => {
-//                 const message = `User ${user.username} have been deleted.`
-//                 res.json({message, data: user})
-//             })
-//             .catch((error) => {
-//                 const message = "Impossible to delete user."
-//                 res.status(500).json({message, data: error})
-//             })
-//         }
-//     })
-//     .catch((error) => {
-//         res.status(400).json({message: error.message, data: error})
-//     })
-// }
+// PUT
+exports.updateUser = (req, res) => {
+    const { username, mail, password } = req.body;
+    const userId = req.params.id;
+  
+    // Générer un nouveau hachage bcrypt pour le mot de passe
+    bcrypt.hash(password, 10)
+      .then((hashedPassword) => {
+        // Mettre à jour l'utilisateur avec le nouveau mot de passe haché
+        User.update({ username, mail, password: hashedPassword }, {
+          where: {
+            id: userId
+          }
+        })
+          .then(([updatedRows]) => {
+            if (updatedRows === 0) {
+              const msg = "User not found.";
+              return res.json({ message: msg });
+            }
+  
+            // Générer un nouveau JSON Web Token (JWT)
+            const token = jwt.sign({ userId: userId }, 'mon_petit_secret');
+  
+            const msg = "User updated.";
+            res.json({ message: msg, data: updatedRows, token });
+          })
+          .catch((error) => {
+            const msg = "Error updating user.";
+            res.status(500).json({ message: msg });
+          });
+      })
+      .catch((error) => {
+        const msg = "Error hashing password.";
+        res.status(500).json({ message: msg });
+      });
+  };
+  
+// DELETE
+exports.deleteUser = (req, res) => {
+    User.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then((user) => {
+        if(user === null){
+            const message = "User not found."
+            return res.status(404).json({message})
+        } else {
+            user.destroy({
+                where: {id: req.params.id}
+            })
+            .then (() => {
+                const message = `User ${user.username} have been deleted.`
+                res.json({message, data: user})
+            })
+            .catch((error) => {
+                const message = "Impossible to delete user."
+                res.status(500).json({message, data: error})
+            })
+        }
+    })
+    .catch((error) => {
+        res.status(400).json({message: error.message, data: error})
+    })
+}

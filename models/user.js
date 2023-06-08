@@ -1,6 +1,6 @@
 const { on } = require("nodemon")
 
-const userRoles = ['taster','restorer', 'admin', 'superadmin']
+const userRoles = ['goûteur','restaurateur', 'admin']
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('User', {
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     roles: {
       type: DataTypes.STRING,
-      defaultValue: 'taster',
+      defaultValue: 'goûteur',
       set(roles) {
         this.setDataValue('roles', roles.join())
       },
@@ -59,23 +59,23 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-  //   RestaurantId: {
-  //     type: DataTypes.INTEGER,
-  //     allowNull: true,
-  //     references: {
-  //         model: 'Restaurant',
-  //         key: 'id'
-  //     },
-  // },
   }, {
     timestamps: true,
     createdAt: 'created',
     updatedAt: false,
-    // scopes: {
-    //   withoutPassword: {
-    //     attributes: { exclude: ['password'] },
-    //   }
-    // }
+    scopes: {
+      withoutPassword: {
+        attributes: { exclude: ['password'] },
+      }
+    },
+    hooks: {
+      afterCreate: (record) => {
+          delete record.dataValues.password;
+      },
+      afterUpdate: (record) => {
+          delete record.dataValues.password;
+      },
+    }
   });
 };
 

@@ -1,9 +1,10 @@
+let reviews = require('../mock-reviews');
 const { Op, UniqueConstraintError, ValidationError } = require('sequelize');
 const { Review, User, Burger } = require('../db/sequelize')
 
 exports.findAllReviews = (req, res) => {
     Review.findAll({
-        // include: [User.scope('withoutPassword'), Burger]
+        include: [User.scope('withoutPassword'), Burger]
     }) 
         .then(results => {
             const message = "Reviews list has been retrieved from database"
@@ -19,7 +20,7 @@ exports.createReview = (req, res) => {
         content: req.body.content,
         rating: req.body.rating,
         UserId: req.body.UserId,
-        BurgerId: req.body.BurgerId
+        BurgerId: req.body.burgerId
     }) 
         .then(result => {
             const message = "review created"

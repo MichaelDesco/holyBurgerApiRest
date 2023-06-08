@@ -9,6 +9,7 @@ const restaurants = [
         picture: "/images/westbay-burger-logo.jpg",
         telephone: "0556789012",
         mail: "westbay@gmail.com",
+        UserId: null,
         created: new Date()
     },
     {
@@ -21,6 +22,7 @@ const restaurants = [
         picture: "/images/resto-ranch-logo.jpg",
         telephone: "0556748879",
         mail: "restoranch@gmail.com",
+        UserId: null,
         created: new Date()
     },
     {
@@ -33,6 +35,7 @@ const restaurants = [
         picture: "/images/hambourg-burger-logo.jpg",
         telephone: "0551020912",
         mail: "lehambourg@gmail.com",
+        UserId: null,
         created: new Date()
     },
     {
@@ -45,6 +48,7 @@ const restaurants = [
         picture: "/images/sunny-burger-logo.jpg",
         telephone: "0554473212",
         mail: "sunnyburger@gmail.com",
+        UserId: null,
         created: new Date()
     }
 ];
