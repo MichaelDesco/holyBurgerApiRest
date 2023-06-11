@@ -5,7 +5,9 @@ const cors = require ('cors'); // CORS
 const path = require('path'); // Chemin
 const sequelize = require('./db/sequelize') // Connexion à la base de données
 const app = express(); // Initialisation de l'app
-const port = 5001; // Port du serveur
+
+// Port du serveur
+const port = 5001; 
 
 // Initialisation de la base de données Sequelize
 // sequelize.initDb();

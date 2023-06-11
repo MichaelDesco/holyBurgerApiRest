@@ -72,7 +72,9 @@ exports.findBurgersByRestaurantId = (req, res) => {
             res.status(404).json({ message })
         } else {
             // Afficher les burgers qui correspondent à l'id du restaurant en paramètre
-            restaurant.getBurgers()
+            restaurant.getBurgers(req.params.id, 
+                { include: Restaurant }
+            )
             .then((burgers) => {
                 const msg = `Burgers from restaurant ${restaurant.name} have been retrieved from database.`
                 res.json({ msg, data: burgers })

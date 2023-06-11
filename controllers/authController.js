@@ -73,18 +73,16 @@ exports.login = (req, res) => {
 exports.protect = (req, res, next) => {
     const authorizationHeader = req.headers.authorization
 
-    console.log("protect",req.headers)
-
     if (!authorizationHeader) {
         const message = 'Token is necessary to authenticate'
         return res.status(401).json({ message })
     }
     try {
     const token = authorizationHeader.split(' ')[1];
-    console.log("token",token)
     const decoded = jwt.verify(token, private_key);
     req.userId = decoded.data
-    } catch (error) {
+    } 
+    catch (error) {
         const message = 'Token is not valid'
         return res.status(401).json({ message, data: error })
     }
@@ -96,7 +94,6 @@ exports.protect = (req, res, next) => {
 exports.restrictTo = (...roles) => {
     return (req, res, next) => {
         User.findByPk(req.userId).then(user => {
-            console.log(req.userId, user.username, user.roles, roles)
             if (!user || !roles.every(role => user.roles.includes(role))) {
                 const message = 'Do not have the rights'
                 return res.status(403).json({ message })
@@ -109,10 +106,12 @@ exports.restrictTo = (...roles) => {
         })
     }
 }
+
+
+  
 exports.restrictToOwnUser = () => {
     return (req, res, next) => {
         User.findByPk(req.userId).then(user => {
-            console.log(req.userId)
             return Review.findByPk(req.params.id).then(review => {
                 if (review.id !== user.id) {
                     const message = "Vous n'êtes pas l'auteur de ce commentaire."

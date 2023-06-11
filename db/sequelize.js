@@ -7,6 +7,7 @@ const ReviewSequelize = require('../models/review');
 const restaurants = require('../mock-restaurants');
 const burgers = require('../mock-burgers');
 
+
 const sequelize = new Sequelize('holy_burger', 'root', '', {
   host: 'localhost',
   dialect: 'mariadb',

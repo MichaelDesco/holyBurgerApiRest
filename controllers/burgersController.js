@@ -41,7 +41,7 @@ exports.findAllBurgers = (req, res) => {
 exports.findBurgerByPk = (req, res) => {
     // Afficher le nom du restaurant qui correspond à l'id en paramètre
     Burger.findByPk(req.params.id, 
-        { include: Review }
+        { include: Restaurant }
     )
     .then((burger) => {
         if (burger === null) {

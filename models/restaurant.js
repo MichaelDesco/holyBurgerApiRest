@@ -34,6 +34,7 @@ module.exports = (sequelize , DataTypes) => {
         },
         city: {
             type: DataTypes.STRING,
+            defaultValue: "https://cdn.sortiraparis.com/images/80/101553/863487-joia-bun-restaurant-de-burgers-helene-darroze-burger-au-crabe.jpg",
             allowNull: false
         },
 
@@ -70,7 +71,7 @@ module.exports = (sequelize , DataTypes) => {
     }, {
         timestamps: true,
         createdAt: 'created',
-        updatedAt: false
+        updatedAt: false,
     })
 }
 

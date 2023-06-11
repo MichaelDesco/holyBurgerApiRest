@@ -7,7 +7,7 @@ router
   .route('/')
   .get(restaurantsController.findAllRestaurants)
   // .post(authController.protect, restaurantsController.createRestaurant)
-  .post(authController.protect, authController.restrictTo("restorer"), restaurantsController.createRestaurant);
+  .post(authController.protect, authController.restrictTo("restaurateur"), restaurantsController.createRestaurant);
 
   router
   .route('/random')

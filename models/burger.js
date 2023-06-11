@@ -1,7 +1,7 @@
 // module qui permet de faire des tests afin de vérifier que le code fonctionne correctement.
+
 const { on } = require("nodemon")
 
-// 
 module.exports = (sequelize , DataTypes) => {
     return sequelize.define('Burger', {
         id: {
@@ -66,7 +66,7 @@ module.exports = (sequelize , DataTypes) => {
     }, {
         timestamps: true,
         createdAt: 'created',
-        updatedAt: false
+        updatedAt: false,
     })
 }
 
