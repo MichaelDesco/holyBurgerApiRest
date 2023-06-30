@@ -1,5 +1,4 @@
 // module qui permet de faire des tests afin de vérifier que le code fonctionne correctement.
-
 const { on } = require("nodemon")
 
 module.exports = (sequelize , DataTypes) => {

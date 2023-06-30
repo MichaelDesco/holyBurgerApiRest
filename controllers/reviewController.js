@@ -1,6 +1,7 @@
 let reviews = require('../mock-reviews');
 const { Op, UniqueConstraintError, ValidationError } = require('sequelize');
-const { Review, User, Burger } = require('../db/sequelize')
+const { Review, User, Burger } = require('../db/sequelize');
+const burger = require('../models/burger');
 
 exports.findAllReviews = (req, res) => {
     Review.findAll({
@@ -15,24 +16,77 @@ exports.findAllReviews = (req, res) => {
         })
 }
 
-exports.createReview = (req, res) => {
-    Review.create({
-        content: req.body.content,
-        rating: req.body.rating,
-        UserId: req.body.UserId,
-        BurgerId: req.body.burgerId
-    }) 
-        .then(result => {
-            const message = "review created"
-            res.json({message, data: result})
-        }).catch(error => {
-            if(error instanceof UniqueConstraintError || error instanceof ValidationError){
-                return res.status(400).json({message: error.message, data: error})
-            } 
-            const message = "review not created"
-            res.status(500).json({message, data: error})
-        })
+exports.findReviewByPk = (req, res) => {
+    // Afficher le nom du user qui correspond à l'id en paramètre
+    Review.findByPk(req.params.id, 
+        { include: User, Burger }
+    )
+    .then((user) => {
+        if (user === null) {
+            const message = `User not found.`
+            res.status(404).json({ message })
+        } else {
+            const msg = `User ${user.name} has been retrieved from database.`
+            res.json({ msg, data: user })
+        }
+    })
+    .then((burger) => {
+        if (burger === null) {
+            const message = `Burger not found.`
+            res.status(404).json({ message })
+        } else {
+            const msg = `Burger ${burger.name} has been retrieved from database.`
+            res.json({ msg, data: burger })
+        }
+    })
+    .catch(error => {
+        if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
+            return res.status(400).json({ message: error.message, data: error })
+        }
+        const message = `Impossible to retrieve user.`
+        res.status(500).json({ message, data: error })
+    })
 }
+
+exports.createReview = (req, res) => {
+    const { userId, burgerId } = req.body;
+
+    // Vérifier si l'utilisateur a déjà laissé un avis sur ce burger
+    Review.findOne({
+        where: {
+            UserId: userId,
+            BurgerId: burgerId
+        }
+    })
+    .then(existingReview => {
+        if (existingReview) {
+            // Si un avis existant est trouvé, renvoyer une réponse indiquant qu'un avis a déjà été laissé
+            return res.status(400).json({ message: "Vous avez déjà laissé un avis sur ce burger." });
+        }
+
+        // Si aucun avis existant n'est trouvé, créer une nouvelle revue
+        Review.create({
+            content: req.body.content,
+            rating: req.body.rating,
+            UserId: userId,
+            BurgerId: burgerId
+        })
+        .then(result => {
+            const message = "Avis créé avec succès.";
+            res.json({ message, data: result });
+        })
+        .catch(error => {
+            const message = "Erreur lors de la création de l'avis.";
+            res.status(500).json({ message, data: error });
+        });
+    })
+    .catch(error => {
+        const message = "Erreur lors de la recherche de l'avis existant.";
+        res.status(500).json({ message, data: error });
+    });
+}
+
+
 
 // exports.updateReview = (req, res) => {
 //     // Modifier le review en base de données qui correspond à l'id spécifé dans les params

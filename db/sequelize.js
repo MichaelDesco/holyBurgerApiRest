@@ -48,7 +48,7 @@ Burger.belongsTo(Restaurant);
 
 User.hasMany(Review, {
   foreignKey: {
-    id: 'UserId',
+    name: 'UserId',
     allowNull: false,
     where: {
       role: {[Op.notIn]: ['restaurateur']}

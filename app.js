@@ -1,4 +1,4 @@
-const express = require('express'); // Framework Express
+const express = require('express'); // Init server, Road ,Middleware, controller fonction 
 const morgan = require('morgan'); // Logger
 const serveFavicon = require('serve-favicon'); // Favicon
 const cors = require ('cors'); // CORS
@@ -44,10 +44,10 @@ const port = 5001;
 // app.use(configureCORS);
 
 app
-  .use(morgan('dev')) // Middleware de journalisation des requêtes
-  .use(serveFavicon(__dirname + '/favicon.ico')) // Middleware pour servir le favicon
-  .use(express.json()) // Middleware pour parser les données JSON dans les requêtes
-  .use(cors()) // Middleware pour gérer les requêtes CORS
+  .use(morgan('dev')) // journalisation des requêtes
+  .use(serveFavicon(__dirname + '/favicon.ico')) // icon du site
+  .use(express.json()) // parser les données JSON dans les requêtes
+  .use(cors()) // gérer les requêtes CORS
 
 // Importation des routes
 const restaurantRouter = require('./routes/restaurantRoutes');

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         rating: {
             type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
             validate: {
                 min: 1,
                 max: 5
@@ -20,15 +20,25 @@ module.exports = (sequelize, DataTypes) => {
         UserId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            unique: 'userBurgerIndex'
         },
         BurgerId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            unique: 'userBurgerIndex'
         },
     }, {
         timestamps: true,
         createdAt: 'created',
         updatedAt: false,
+        indexes: [
+            {
+                unique: false,
+                fields: ['UserId', 'BurgerId']
+            }
+        ]
+    });
 
-    })
+    return Review;
 }
+

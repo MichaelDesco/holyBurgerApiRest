@@ -13,7 +13,7 @@ router
         .get(burgersController.findRandomBurger)
 
     // router
-    // .route('/withReview')
+    // .route('/Review')
     // .get(burgersController.findAllBurgersByReview)
 
     router
@@ -24,4 +24,3 @@ router
 
 
 module.exports = router;
-
